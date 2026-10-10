@@ -1,52 +1,71 @@
 const CAMPOS = [
-  { id: "telefono", etiqueta: "Telefono", ejemplo: "5555-1234 o +502 5555 1234" },
+  { id: "telefono", etiqueta: "Telefono", ejemplo: "5555-1234" },
   { id: "dpi", etiqueta: "DPI (CUI)", ejemplo: "2547 89632 0101" },
-  { id: "correo", etiqueta: "Correo electronico", ejemplo: "usuario@gmail.com" },
-  { id: "nit", etiqueta: "NIT", ejemplo: "1234567-8" },
-  { id: "placa", etiqueta: "Placa de vehiculo", ejemplo: "P-123ABC" },
+  { id: "correo", etiqueta: "Correo", ejemplo: "usuario@gmail.com" },
+  { id: "nit", etiqueta: "NIT", ejemplo: "1234567-9" },
+  { id: "placa", etiqueta: "Placa", ejemplo: "P-123ABC" },
   { id: "codigoPostal", etiqueta: "Codigo postal", ejemplo: "01010" },
   { id: "zona", etiqueta: "Zona", ejemplo: "Zona 10" },
-  { id: "quetzales", etiqueta: "Monto en quetzales", ejemplo: "Q1,250.50" },
+  { id: "quetzales", etiqueta: "Monto (Q)", ejemplo: "Q1,250.50" },
   { id: "nombre", etiqueta: "Nombre completo", ejemplo: "Maria Lopez" },
   { id: "fecha", etiqueta: "Fecha", ejemplo: "15/09/2000" },
 ];
 
+const cntOk = document.getElementById("cnt-ok");
+const cntMal = document.getElementById("cnt-mal");
+const cntReg = document.getElementById("cnt-reg");
+
 // ---- Validador de campos ----
 const contenedor = document.getElementById("campos");
+const tarjetas = [];
+
+function actualizarContadores() {
+  cntOk.textContent = tarjetas.filter((t) => t.classList.contains("ok")).length;
+  cntMal.textContent = tarjetas.filter((t) => t.classList.contains("mal")).length;
+}
+
 for (const campo of CAMPOS) {
   const tarjeta = document.createElement("div");
   tarjeta.className = "tarjeta";
+
+  const led = document.createElement("span");
+  led.className = "led";
 
   const label = document.createElement("label");
   label.textContent = campo.etiqueta;
   const input = document.createElement("input");
   input.placeholder = campo.ejemplo;
   input.autocomplete = "off";
+  input.spellcheck = false;
   label.appendChild(input);
 
   const estado = document.createElement("p");
   estado.className = "estado";
+  estado.textContent = "> esperando datos...";
 
   input.addEventListener("input", () => {
     if (!input.value.trim()) {
       tarjeta.className = "tarjeta";
-      estado.textContent = "";
-      return;
+      estado.textContent = "> esperando datos...";
+    } else {
+      const r = Validaciones[campo.id](input.value);
+      tarjeta.className = "tarjeta " + (r.valido ? "ok" : "mal");
+      estado.textContent = r.valido ? "[OK] " + (r.detalle || r.mensaje) : "[ERROR] " + r.mensaje;
     }
-    const r = Validaciones[campo.id](input.value);
-    tarjeta.className = "tarjeta " + (r.valido ? "ok" : "mal");
-    estado.textContent = r.valido ? "✓ " + (r.detalle || r.mensaje) : "✗ " + r.mensaje;
+    actualizarContadores();
   });
 
-  tarjeta.append(label, estado);
+  tarjeta.append(led, label, estado);
   contenedor.appendChild(tarjeta);
+  tarjetas.push(tarjeta);
 }
 
 // ---- Registro con restricciones ----
 const CLAVE = "personas-gt";
 const form = document.getElementById("registro");
-const errores = document.getElementById("errores");
+const consola = document.getElementById("errores");
 const cuerpo = document.getElementById("personas");
+const vacio = document.getElementById("vacio");
 
 function cargar() {
   try { return JSON.parse(localStorage.getItem(CLAVE)) || []; } catch { return []; }
@@ -68,6 +87,18 @@ function pintar() {
     }
     cuerpo.appendChild(fila);
   }
+  vacio.hidden = personas.length > 0;
+  cntReg.textContent = personas.length;
+}
+
+function mostrar(tipo, lineas) {
+  consola.hidden = false;
+  consola.className = "consola " + tipo;
+  consola.replaceChildren(...lineas.map((l) => {
+    const p = document.createElement("p");
+    p.textContent = "> " + l;
+    return p;
+  }));
 }
 
 form.addEventListener("submit", (e) => {
@@ -98,23 +129,29 @@ form.addEventListener("submit", (e) => {
   if (rCorreo.valido && personas.some((p) => p.correo === correo)) fallos.push("UNIQUE: ese correo ya esta registrado.");
 
   if (fallos.length) {
-    errores.className = "error";
-    errores.textContent = fallos.join(" ");
+    mostrar("error", fallos);
     return;
   }
   personas.push({ nombre, dpi, correo, telefono: d.telefono.trim(), edad });
   guardar(personas);
   pintar();
   form.reset();
-  errores.className = "exito";
-  errores.textContent = "Persona registrada correctamente.";
+  mostrar("exito", ["Registro guardado correctamente."]);
 });
 
 document.getElementById("limpiar").addEventListener("click", () => {
   personas = [];
   guardar(personas);
   pintar();
-  errores.textContent = "";
+  consola.hidden = true;
 });
+
+// ---- Reloj de la barra de tareas ----
+const reloj = document.getElementById("reloj");
+function tic() {
+  reloj.textContent = new Date().toLocaleTimeString("es-GT", { hour: "2-digit", minute: "2-digit" });
+}
+tic();
+setInterval(tic, 10000);
 
 pintar();

@@ -1,7 +1,9 @@
-# Validaciones de Guatemala
+# VALIDA.EXE
 
-Pagina web (HTML + CSS + JavaScript, sin dependencias) con validaciones por
-expresiones regulares y restricciones de datos.
+Pagina web con estilo retro (HTML + CSS + JavaScript, sin dependencias) con
+validaciones por expresiones regulares y restricciones de datos.
+
+Demo: https://sttards.github.io/validaciones-guatemala/
 
 ## Validaciones
 

@@ -3,46 +3,91 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Validaciones Guatemala</title>
+  <title>VALIDA.EXE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <h1>Validaciones de Guatemala</h1>
-    <p>Practica de expresiones regulares y restricciones de datos. Escribe en cada campo y se valida al instante.</p>
-  </header>
+  <div class="crt" aria-hidden="true"></div>
 
-  <main>
-    <section>
-      <h2>Validador de campos</h2>
-      <div id="campos" class="grid"></div>
+  <main class="escritorio">
+    <!-- Ventana de bienvenida -->
+    <section class="ventana ventana-intro">
+      <div class="barra">
+        <span class="barra-titulo"><span class="icono">&#9635;</span> VALIDA.EXE</span>
+        <span class="barra-botones" aria-hidden="true"><b>_</b><b>&#9633;</b><b>&times;</b></span>
+      </div>
+      <div class="contenido intro">
+        <pre class="logo" aria-label="VALIDA">
+ _   _  _   _    ___ ___   _
+| | | |/_\ | |  |_ _|   \ /_\
+| |_| / _ \| |__ | || |) / _ \
+ \___/_/ \_\____|___|___/_/ \_\</pre>
+        <p class="maquina">&gt; Sistema de validacion de datos v1.0<span class="cursor">_</span></p>
+        <p>Escribe en cada campo y el sistema valida al instante con expresiones regulares.</p>
+        <div class="contador">
+          <div><span id="cnt-ok">0</span><small>VALIDOS</small></div>
+          <div><span id="cnt-mal">0</span><small>ERRORES</small></div>
+          <div><span id="cnt-reg">0</span><small>REGISTROS</small></div>
+        </div>
+      </div>
     </section>
 
-    <section>
-      <h2>Registro de personas (3 restricciones)</h2>
-      <p class="nota">
-        <strong>NOT NULL:</strong> nombre obligatorio &middot;
-        <strong>UNIQUE:</strong> DPI y correo no se repiten &middot;
-        <strong>CHECK:</strong> edad &ge; 18 y DPI valido.
-      </p>
-      <form id="registro" novalidate>
-        <label>Nombre <input name="nombre" autocomplete="off"></label>
-        <label>DPI <input name="dpi" inputmode="numeric" autocomplete="off"></label>
-        <label>Correo <input name="correo" autocomplete="off"></label>
-        <label>Telefono <input name="telefono" inputmode="tel" autocomplete="off"></label>
-        <label>Edad <input name="edad" type="number" min="0"></label>
-        <button type="submit">Guardar</button>
-      </form>
-      <p id="errores" class="error" role="alert"></p>
-      <table>
-        <thead><tr><th>Nombre</th><th>DPI</th><th>Correo</th><th>Telefono</th><th>Edad</th></tr></thead>
-        <tbody id="personas"></tbody>
-      </table>
-      <button id="limpiar" type="button" class="secundario">Vaciar registro</button>
+    <!-- Validador de campos -->
+    <section class="ventana">
+      <div class="barra">
+        <span class="barra-titulo"><span class="icono">&#9998;</span> VALIDADOR.EXE</span>
+        <span class="barra-botones" aria-hidden="true"><b>_</b><b>&#9633;</b><b>&times;</b></span>
+      </div>
+      <div class="contenido">
+        <div id="campos" class="grid"></div>
+      </div>
+    </section>
+
+    <!-- Registro con restricciones -->
+    <section class="ventana">
+      <div class="barra barra-alt">
+        <span class="barra-titulo"><span class="icono">&#9783;</span> REGISTRO.DB</span>
+        <span class="barra-botones" aria-hidden="true"><b>_</b><b>&#9633;</b><b>&times;</b></span>
+      </div>
+      <div class="contenido">
+        <div class="reglas">
+          <div class="regla"><span class="chip">NOT NULL</span>Nombre obligatorio</div>
+          <div class="regla"><span class="chip">UNIQUE</span>DPI y correo sin repetir</div>
+          <div class="regla"><span class="chip">CHECK</span>Edad &ge; 18 y DPI valido</div>
+        </div>
+
+        <form id="registro" novalidate>
+          <label>Nombre <input name="nombre" autocomplete="off" placeholder="Maria Lopez"></label>
+          <label>DPI <input name="dpi" inputmode="numeric" autocomplete="off" placeholder="0000 00000 0000"></label>
+          <label>Correo <input name="correo" autocomplete="off" placeholder="usuario@gmail.com"></label>
+          <label>Telefono <input name="telefono" inputmode="tel" autocomplete="off" placeholder="5555-1234"></label>
+          <label>Edad <input name="edad" type="number" min="0" placeholder="18"></label>
+          <button type="submit" class="boton boton-primario">&#9654; GUARDAR</button>
+        </form>
+
+        <div id="errores" class="consola" role="alert" hidden></div>
+
+        <div class="tabla-marco">
+          <table>
+            <thead><tr><th>Nombre</th><th>DPI</th><th>Correo</th><th>Telefono</th><th>Edad</th></tr></thead>
+            <tbody id="personas"></tbody>
+          </table>
+          <p id="vacio" class="vacio">-- SIN REGISTROS --</p>
+        </div>
+        <button id="limpiar" type="button" class="boton">&#10006; VACIAR REGISTRO</button>
+      </div>
     </section>
   </main>
 
-  <footer>Los datos del registro se guardan solo en tu navegador.</footer>
+  <footer class="taskbar">
+    <span class="inicio">&#9632; INICIO</span>
+    <span class="tarea">VALIDA.EXE</span>
+    <span class="tarea">REGISTRO.DB</span>
+    <span id="reloj" class="reloj">00:00</span>
+  </footer>
 
   <script src="validaciones.js"></script>
   <script src="app.js"></script>
