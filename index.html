@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Validaciones Guatemala</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Validaciones de Guatemala</h1>
+    <p>Practica de expresiones regulares y restricciones de datos. Escribe en cada campo y se valida al instante.</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Validador de campos</h2>
+      <div id="campos" class="grid"></div>
+    </section>
+
+    <section>
+      <h2>Registro de personas (3 restricciones)</h2>
+      <p class="nota">
+        <strong>NOT NULL:</strong> nombre obligatorio &middot;
+        <strong>UNIQUE:</strong> DPI y correo no se repiten &middot;
+        <strong>CHECK:</strong> edad &ge; 18 y DPI valido.
+      </p>
+      <form id="registro" novalidate>
+        <label>Nombre <input name="nombre" autocomplete="off"></label>
+        <label>DPI <input name="dpi" inputmode="numeric" autocomplete="off"></label>
+        <label>Correo <input name="correo" autocomplete="off"></label>
+        <label>Telefono <input name="telefono" inputmode="tel" autocomplete="off"></label>
+        <label>Edad <input name="edad" type="number" min="0"></label>
+        <button type="submit">Guardar</button>
+      </form>
+      <p id="errores" class="error" role="alert"></p>
+      <table>
+        <thead><tr><th>Nombre</th><th>DPI</th><th>Correo</th><th>Telefono</th><th>Edad</th></tr></thead>
+        <tbody id="personas"></tbody>
+      </table>
+      <button id="limpiar" type="button" class="secundario">Vaciar registro</button>
+    </section>
+  </main>
+
+  <footer>Los datos del registro se guardan solo en tu navegador.</footer>
+
+  <script src="validaciones.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
