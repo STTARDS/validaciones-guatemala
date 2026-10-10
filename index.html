@@ -3,91 +3,102 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VALIDA.EXE</title>
+  <title>VALIDA</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Orbitron:wght@500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="crt" aria-hidden="true"></div>
+  <div class="estrellas" aria-hidden="true"></div>
 
-  <main class="escritorio">
-    <!-- Ventana de bienvenida -->
-    <section class="ventana ventana-intro">
-      <div class="barra">
-        <span class="barra-titulo"><span class="icono">&#9635;</span> VALIDA.EXE</span>
-        <span class="barra-botones" aria-hidden="true"><b>_</b><b>&#9633;</b><b>&times;</b></span>
+  <!-- ===== Portada ===== -->
+  <header class="hero">
+    <nav class="nav">
+      <span class="marca">VALIDA<span>.80</span></span>
+      <div class="nav-links">
+        <a href="#validador">Validador</a>
+        <a href="#registro">Registro</a>
       </div>
-      <div class="contenido intro">
-        <pre class="logo" aria-label="VALIDA">
- _   _  _   _    ___ ___   _
-| | | |/_\ | |  |_ _|   \ /_\
-| |_| / _ \| |__ | || |) / _ \
- \___/_/ \_\____|___|___/_/ \_\</pre>
-        <p class="maquina">&gt; Sistema de validacion de datos v1.0<span class="cursor">_</span></p>
-        <p>Escribe en cada campo y el sistema valida al instante con expresiones regulares.</p>
-        <div class="contador">
-          <div><span id="cnt-ok">0</span><small>VALIDOS</small></div>
-          <div><span id="cnt-mal">0</span><small>ERRORES</small></div>
-          <div><span id="cnt-reg">0</span><small>REGISTROS</small></div>
-        </div>
+    </nav>
+
+    <div class="hero-texto">
+      <p class="pre">&#9733; Practica de expresiones regulares &#9733;</p>
+      <h1 class="titulo" data-texto="VALIDA">VALIDA</h1>
+      <p class="sub"><span id="maquina"></span><span class="cursor">|</span></p>
+
+      <a href="#validador" class="btn-neon">Comenzar &#8595;</a>
+    </div>
+
+    <div class="sol" aria-hidden="true"></div>
+    <div class="montanas" aria-hidden="true"></div>
+    <div class="piso" aria-hidden="true"><div class="cuadricula"></div></div>
+  </header>
+
+  <main>
+    <!-- ===== Validador ===== -->
+    <section id="validador" class="seccion">
+      <div class="seccion-cabeza revelar">
+        <span class="etiqueta">01</span>
+        <h2>Validador de campos</h2>
+        <p>Escribe un dato y se valida al instante.</p>
       </div>
+
+      <div class="stats revelar">
+        <div class="stat stat-ok"><span id="cnt-ok">0</span><small>Validos</small></div>
+        <div class="stat stat-mal"><span id="cnt-mal">0</span><small>Errores</small></div>
+        <div class="stat stat-reg"><span id="cnt-reg">0</span><small>Registros</small></div>
+      </div>
+
+      <div class="progreso revelar">
+        <div class="progreso-info"><span>Progreso</span><span id="pct">0%</span></div>
+        <div class="progreso-barra"><div id="barra"></div></div>
+      </div>
+
+      <div id="campos" class="grid"></div>
     </section>
 
-    <!-- Validador de campos -->
-    <section class="ventana">
-      <div class="barra">
-        <span class="barra-titulo"><span class="icono">&#9998;</span> VALIDADOR.EXE</span>
-        <span class="barra-botones" aria-hidden="true"><b>_</b><b>&#9633;</b><b>&times;</b></span>
+    <!-- ===== Registro ===== -->
+    <section id="registro" class="seccion">
+      <div class="seccion-cabeza revelar">
+        <span class="etiqueta">02</span>
+        <h2>Registro de personas</h2>
+        <p>Tres restricciones de base de datos aplicadas antes de guardar.</p>
       </div>
-      <div class="contenido">
-        <div id="campos" class="grid"></div>
-      </div>
-    </section>
 
-    <!-- Registro con restricciones -->
-    <section class="ventana">
-      <div class="barra barra-alt">
-        <span class="barra-titulo"><span class="icono">&#9783;</span> REGISTRO.DB</span>
-        <span class="barra-botones" aria-hidden="true"><b>_</b><b>&#9633;</b><b>&times;</b></span>
+      <div class="reglas revelar">
+        <div class="regla"><b>NOT NULL</b><span>El nombre es obligatorio</span></div>
+        <div class="regla"><b>UNIQUE</b><span>DPI y correo no se repiten</span></div>
+        <div class="regla"><b>CHECK</b><span>Edad &ge; 18 y DPI valido</span></div>
       </div>
-      <div class="contenido">
-        <div class="reglas">
-          <div class="regla"><span class="chip">NOT NULL</span>Nombre obligatorio</div>
-          <div class="regla"><span class="chip">UNIQUE</span>DPI y correo sin repetir</div>
-          <div class="regla"><span class="chip">CHECK</span>Edad &ge; 18 y DPI valido</div>
-        </div>
 
-        <form id="registro" novalidate>
-          <label>Nombre <input name="nombre" autocomplete="off" placeholder="Maria Lopez"></label>
-          <label>DPI <input name="dpi" inputmode="numeric" autocomplete="off" placeholder="0000 00000 0000"></label>
-          <label>Correo <input name="correo" autocomplete="off" placeholder="usuario@gmail.com"></label>
-          <label>Telefono <input name="telefono" inputmode="tel" autocomplete="off" placeholder="5555-1234"></label>
-          <label>Edad <input name="edad" type="number" min="0" placeholder="18"></label>
-          <button type="submit" class="boton boton-primario">&#9654; GUARDAR</button>
+      <div class="panel revelar">
+        <form id="registro-form" novalidate>
+          <label class="campo-form">Nombre<input name="nombre" autocomplete="off" placeholder="Maria Lopez"></label>
+          <label class="campo-form">DPI<input name="dpi" inputmode="numeric" autocomplete="off" placeholder="2547 89633 0101"></label>
+          <label class="campo-form">Correo<input name="correo" autocomplete="off" placeholder="usuario@gmail.com"></label>
+          <label class="campo-form">Telefono<input name="telefono" inputmode="tel" autocomplete="off" placeholder="5555-1234"></label>
+          <label class="campo-form">Edad<input name="edad" type="number" min="0" placeholder="18"></label>
+          <button type="submit" class="btn-neon btn-lleno">Guardar</button>
         </form>
-
-        <div id="errores" class="consola" role="alert" hidden></div>
 
         <div class="tabla-marco">
           <table>
             <thead><tr><th>Nombre</th><th>DPI</th><th>Correo</th><th>Telefono</th><th>Edad</th></tr></thead>
             <tbody id="personas"></tbody>
           </table>
-          <p id="vacio" class="vacio">-- SIN REGISTROS --</p>
+          <p id="vacio" class="vacio">Aun no hay registros</p>
         </div>
-        <button id="limpiar" type="button" class="boton">&#10006; VACIAR REGISTRO</button>
+        <button id="limpiar" type="button" class="btn-texto">Vaciar registro</button>
       </div>
     </section>
   </main>
 
-  <footer class="taskbar">
-    <span class="inicio">&#9632; INICIO</span>
-    <span class="tarea">VALIDA.EXE</span>
-    <span class="tarea">REGISTRO.DB</span>
-    <span id="reloj" class="reloj">00:00</span>
+  <footer class="pie">
+    <div class="marquesina"><span>TELEFONO &#9670; DPI &#9670; CORREO &#9670; NIT &#9670; PLACA &#9670; CODIGO POSTAL &#9670; ZONA &#9670; QUETZALES &#9670; NOMBRE &#9670; FECHA &#9670;&nbsp;</span><span aria-hidden="true">TELEFONO &#9670; DPI &#9670; CORREO &#9670; NIT &#9670; PLACA &#9670; CODIGO POSTAL &#9670; ZONA &#9670; QUETZALES &#9670; NOMBRE &#9670; FECHA &#9670;&nbsp;</span></div>
   </footer>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
 
   <script src="validaciones.js"></script>
   <script src="app.js"></script>
