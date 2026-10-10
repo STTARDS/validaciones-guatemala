@@ -1,6 +1,6 @@
 const CAMPOS = [
   { id: "telefono", etiqueta: "Telefono", ejemplo: "5555-1234" },
-  { id: "dpi", etiqueta: "DPI (CUI)", ejemplo: "2547 89632 0101" },
+  { id: "dpi", etiqueta: "DPI (CUI)", ejemplo: "2547 89633 0101" },
   { id: "correo", etiqueta: "Correo", ejemplo: "usuario@gmail.com" },
   { id: "nit", etiqueta: "NIT", ejemplo: "1234567-9" },
   { id: "placa", etiqueta: "Placa", ejemplo: "P-123ABC" },
